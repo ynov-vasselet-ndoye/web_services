@@ -1,0 +1,40 @@
+version: "3.2"
+
+services:
+  reservation:
+    build: ./ynov_reservations
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./ynov_reservations:/app:rw
+    environment:
+      JWT_SECRET_KEY: /app/config/jwt/private.pem
+      JWT_PUBLIC_KEY: /app/config/jwt/public.pem
+      JWT_PASSPHRASE: 96933ad9993967aed830448847b80692c723f828c5f7a684877f4124c1f9b142
+      #JWT_PASSPHRASE: ${JWT_PASSPHRASE}
+    command: sh start.sh
+  rabbitmq:
+    image: rabbitmq:management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  web:
+    build: ./ynov_movies
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./ynov_movies:/app:rw
+    command: sh start.sh
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: movies_api
+      POSTGRES_USER: iannis_api
+      POSTGRES_PASSWORD: iannis
+    volumes:
+      - postgres_data:/var/lib/postgresql/datapostgresql/data:rw
+
+volumes:
+  postgres_data:
