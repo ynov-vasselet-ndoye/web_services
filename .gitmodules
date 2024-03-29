@@ -1,3 +1,6 @@
 [submodule "ynov_movies"]
 	path = ynov_movies
 	url = https://github.com/ynov-vasselet-ndoye/ynov_movies.git
+[submodule "ynov_reservations"]
+	path = ynov_reservations
+	url = https://github.com/ynov-vasselet-ndoye/ynov_reservations.git
